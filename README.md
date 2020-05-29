@@ -283,7 +283,7 @@ $ aws lambda update-function-code --function-name ingestor --zip-file lambda_fun
 
 2. Pass SQL connection details to the function as parameters. It will be better to store connection details in Secrets Manager or SSM Parameter Store so you avoid storing passwords in function parameter.
 
-[asd](images/lambdaenv.png)
+![](images/lambdaenv.png)
 
 Connect to the database
 
