@@ -182,11 +182,11 @@ Create an Event Rule, configure a Schedule to invoke the target, "watcher" Lambd
 
 The function's logic is as the following:
 
-![](watcher.png)
+![](images/watcher.png)
 
 The function is invoked by the Cloudwatch Events.
 
-First step is to remove old entries from the database:
+First step is to remove old entries from the database.
 
 ```
 timestamp_24hrsago = int(datetime.now().timestamp()) - 86400
@@ -212,6 +212,8 @@ timestamp_1hrago = int(datetime.now().timestamp()) - 3600
 ...
 cur.execute('SELECT ip, SUM(count) as totalcount FROM accesslogstats WHERE timestamp > %s group by ip HAVING totalcount > %s ORDER BY totalcount DESC LIMIT %s;', (timestamp_1hrago, maxtotalcount, denyrulecap))
 ```
+
+Implementing duration or time window means the function will be able to automatically exclude old entries, effectively lifting the deny rules as they are no longer summarized.
 
 The query ranks the number of access, highest returned first.
 
