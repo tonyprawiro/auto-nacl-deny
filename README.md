@@ -13,7 +13,7 @@ Using combination of multiple AWS Services, automation can be built so that you 
 
 # Architecture
 
-[asd](images/arch.png)
+![](images/arch.png)
 
 - Your application lives within a subnet protected by Network Access Control List
 
@@ -75,13 +75,13 @@ The following filter pattern is used so that Cloudwatch can identify fields to b
 [ ip, remotehost, userid, timestamp, request, statuscode, bytes, useragent ]
 ```
 
-[asd](images/logfilter.png)
+![](images/logfilter.png)
 
 ## "ingestor" Lambda function
 
 The function logic is as the following:
 
-[asd](images/ingestor.png)
+![](images/ingestor.png)
 
 The function receive the payload from Cloudwatch Logs subscription in the event object. The payload is compressed and encoded, so it needs to be decoded and extracted first:
 
@@ -130,7 +130,7 @@ $ aws lambda update-function-code --function-name ingestor --zip-file lambda_fun
 
 2. Pass SQL connection details to the function as parameters. It will be better to store connection details in Secrets Manager or SSM Parameter Store so you avoid storing passwords in function parameter.
 
-[asd](images/lambdaenv.png)
+![](images/lambdaenv.png)
 
 Connect to the database
 
@@ -176,13 +176,13 @@ The reason SQL database is used here is because we will need to run aggregation 
 
 Create an Event Rule, configure a Schedule to invoke the target, "watcher" Lambda function.
 
-[asd](images/cweventrule.png)
+![](images/cweventrule.png)
 
 ## "watcher" Lambda function
 
 The function's logic is as the following:
 
-[asd](watcher.png)
+![](watcher.png)
 
 The function is invoked by the Cloudwatch Events.
 
@@ -327,7 +327,7 @@ In addition to the above:
 
 5. The Lambda function needs to perform EC2 API calls . It has to be associated with private subnet that has a route to NAT Gateway or NAT Instance in another public subnet.
 
-[asd](images/lambdaprivatesubnet.png)
+![](images/lambdaprivatesubnet.png)
 
 ## VPC Network Access Control List
 
@@ -341,9 +341,7 @@ We want to ensure that there is still some room for you to add rules based on ot
 
 If your "allow" rules were given RuleNumber below the range, VPC NACL will immediately allow the traffic to pass through and the "deny" rules will not be evaluated.
 
-[asd](images/nacl.png)
-
-
+![](images/nacl.png)
 
 # References
 
